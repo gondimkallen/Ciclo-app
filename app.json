@@ -30,6 +30,12 @@
     ],
     "experiments": {
       "typedRoutes": false
+    },
+    "owner": "kallengondim",
+    "extra": {
+      "eas": {
+        "projectId": "08f212da-06e4-4da6-861e-647c29a207ad"
+      }
     }
   }
 }
