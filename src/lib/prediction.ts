@@ -26,7 +26,11 @@ const MIN_CYCLES_USED = 3;
  * As datas são mostradas como faixas (mínimo a máximo), não como um único dia,
  * porque a variação entre ciclos é normal.
  */
-export function predictCycle(cycles: CycleRecord[], periodLengths: number[] = []): Prediction | null {
+export function predictCycle(
+  cycles: CycleRecord[],
+  periodLengths: number[] = [],
+  defaults: { cycle: number; period: number } = { cycle: DEFAULT_CYCLE, period: DEFAULT_PERIOD }
+): Prediction | null {
   if (cycles.length === 0) return null;
 
   const sorted = [...cycles].sort((a, b) => a.startDate.localeCompare(b.startDate));
@@ -38,12 +42,12 @@ export function predictCycle(cycles: CycleRecord[], periodLengths: number[] = []
 
   const used = lengths.slice(-MAX_CYCLES_USED);
   const enough = used.length >= MIN_CYCLES_USED;
-  const avgCycle = enough ? mean(used) : DEFAULT_CYCLE;
+  const avgCycle = enough ? mean(used) : defaults.cycle;
   const minCycle = enough ? Math.min(...used) : avgCycle - 2;
   const maxCycle = enough ? Math.max(...used) : avgCycle + 2;
 
   const usedPeriods = periodLengths.slice(-MAX_CYCLES_USED).filter((d) => d >= 1 && d <= 12);
-  const avgPeriod = usedPeriods.length >= MIN_CYCLES_USED ? mean(usedPeriods) : DEFAULT_PERIOD;
+  const avgPeriod = usedPeriods.length >= MIN_CYCLES_USED ? mean(usedPeriods) : defaults.period;
 
   const last = parseISO(sorted[sorted.length - 1].startDate);
   const nextStart = addDays(last, Math.round(avgCycle));

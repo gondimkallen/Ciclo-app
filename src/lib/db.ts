@@ -23,6 +23,10 @@ export function getDb(): Promise<SQLite.SQLiteDatabase> {
           UNIQUE(day, kind, custom_label)
         );
         CREATE INDEX IF NOT EXISTS idx_symptom_day ON symptom_entries(day);
+        CREATE TABLE IF NOT EXISTS settings (
+          key TEXT PRIMARY KEY,
+          value TEXT NOT NULL                 -- JSON
+        );
       `);
       return db;
     })();

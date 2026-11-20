@@ -64,10 +64,9 @@ export default function SymptomPanel({ day, entries, onChange }: Props) {
       <Group title="Corrimento">
         <Choices options={DISCHARGE} selected={valueOf('discharge')} onPick={(o) => pick('discharge', o)} />
       </Group>
-      <Group title="Sexo">
+      <Group title="Sexo e libido">
         <Choices options={['Teve relação']} selected={valueOf('sex') ? 'Teve relação' : null} onPick={toggleSex} />
-      </Group>
-      <Group title="Libido">
+        <View style={{ height: 8 }} />
         <Choices options={LIBIDO} selected={valueOf('libido')} onPick={(o) => pick('libido', o)} />
       </Group>
 
